@@ -11,3 +11,9 @@ eval_bundle/
 # Local setup
 CLAUDE.md
 wandb/
+
+data/
+.cache
+graphs/*.ods
+logs
+experimental_data

@@ -1,9 +1,13 @@
 """
 Evaluate compression ratio of the tokenizer.
 """
-
+import os
 from nanochat.tokenizer import get_tokenizer, RustBPETokenizer
-from nanochat.util import load_tiny_shakespeare
+from nanochat.tinyshakespeare import load_dataset
+
+from dotenv import load_dotenv
+load_dotenv()
+os.environ["NANOCHAT_BASE_DIR"] = os.getenv("TS")
 
 # Random text I got from a random website this morning
 news_text = r"""
@@ -62,7 +66,7 @@ Well, this is the last time I shall ever do it.
 # train_text = "\n".join(train_docs)
 # val_docs = next(parquets_iter_batched(split="val"))
 # val_text = "\n".join(val_docs)
-train_text, val_text = load_tiny_shakespeare() 
+train_text, val_text = load_dataset() 
 
 all_text = [
     ("news", news_text),

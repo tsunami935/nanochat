@@ -1,7 +1,8 @@
 import os
 import requests
+from nanochat.tokenizer import RustBPETokenizer
 
-def load_tiny_shakespeare():
+def load_dataset():
     """Returns [train, val] data"""
     # -----------------------------------------------------------------------------
     # download the tiny shakespeare dataset
@@ -17,6 +18,11 @@ def load_tiny_shakespeare():
     train_data = data[:int(n*0.9)]
     val_data = data[int(n*0.9):]
     return train_data, val_data
+
+def load_tokenizer(proj: str):
+    base_dir = get_proj_dir(proj)
+    tokenizer_dir = os.path.join(base_dir, "tokenizer")
+    return RustBPETokenizer.from_directory(tokenizer_dir)
 
 def get_proj_dir(proj: str):
     dir = os.getenv(proj)

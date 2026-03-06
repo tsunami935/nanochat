@@ -8,10 +8,12 @@ import argparse
 import requests
 import torch
 from nanochat.tokenizer import RustBPETokenizer
-from nanochat.util import get_proj_dir, load_tiny_shakespeare
+from nanochat.common import get_base_dir
+from nanochat.tinyshakespeare import load_dataset
 
 from dotenv import load_dotenv
 load_dotenv()
+os.environ["NANOCHAT_BASE_DIR"] = os.getenv("TS")
 
 # -----------------------------------------------------------------------------
 # Parse command line arguments
@@ -27,7 +29,7 @@ print(f"vocab_size: {args.vocab_size:,}")
 
 # -----------------------------------------------------------------------------
 # Text iterator
-train_data, val_data = load_tiny_shakespeare()
+train_data, val_data = load_dataset()
 def text_iterator():
     yield train_data
 text_iter = text_iterator()
@@ -42,7 +44,7 @@ print(f"Training time: {train_time:.2f}s")
 
 # -----------------------------------------------------------------------------
 # Save the tokenizer to disk
-base_dir = get_proj_dir("TS")
+base_dir = get_base_dir()
 tokenizer_dir = os.path.join(base_dir, "tokenizer")
 tokenizer.save(tokenizer_dir)
 
